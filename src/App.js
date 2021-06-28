@@ -1,36 +1,26 @@
-import {React,useState} from "react"
+
+import {BrowserRouter,Switch ,Route,HashRouter } from 'react-router-dom';
+import Main from "./pages/Main";
+import Todo from "./pages/Todo";
+import UsersList from './pages/UsersList';
 
 
 function App() {
-  const [ toDo, setTodo ] = useState();
-  const [toDoes, setToDoes]= useState([]);
-
-  const AddTodo=()=>{
-    let temp = toDoes;
-    temp.push(toDo);
-    setToDoes(temp);
-    setTodo("");
-
-  }
-
   return (
+    
     <>
-    <div style={{display:"flex",justifyContent:"center",justifyItems:"center"}}>
-      <div style={{display:""}}>
-    <div style={{display:"flex",justifyContent:"center"}}>
-      Todo
-    </div>
-    <div style={{display:"flex"}}>
-      <input type="text" value={toDo} onChange={(e)=>setTodo(e.target.value)} placeholder="task"></input>
-      <button className="btn sm" onClick={AddTodo}> Add</button>
-    </div>
-    <div>
-      {toDoes.map((data,i)=> <div> {i+1 + ".  " +data} </div>)}
-    </div>
-    </div>
-    </div>
-    </>
-  );
+      <HashRouter>
+    <div className="App">
+    <Switch>
+      <Route path="/" exact component={Main}></Route>
+      <Route path="/todo" exact component={Todo}></Route>
+      <Route path="/userlist" exact component={UsersList}></Route>
+
+      </Switch>
+      </div>
+      </HashRouter>
+      </>
+      )
 }
 
 export default App;
