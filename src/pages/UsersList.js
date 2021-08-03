@@ -10,31 +10,39 @@ export default class UsersList extends Component {
         super(props);
         this.state = {
             usersData: [],
-            itemsCountPerPage:"",
-            totalItemsCount:"5",
-            pageRangeDisplayed:"",
-            activePage:1,
+            itemsCountPerPage: "",
+            totalItemsCount: "5",
+            pageRangeDisplayed: "",
+            activePage: 1,
 
         }
-        
+
     }
-    componentDidMount() { 
-        axios("https://reqres.in/api/users?page="+ this.state.activePage).
+    componentDidMount() {
+        axios("https://reqres.in/api/users?page=" + this.state.activePage).
             then(
-                res => this.setState({ usersData: res.data.data, itemsCountPerPage : res.data.per_page, totalItemsCount : res.data.total, pageRangeDisplayed : res.data.total_pages}))
+                res => this.setState({ usersData: res.data.data, itemsCountPerPage: res.data.per_page, totalItemsCount: res.data.total, pageRangeDisplayed: res.data.total_pages }))
             .catch(function (error) {
                 console.log(error)
 
             })
     }
-   
 
-    handlePageChange(pageNumber) {
-        this.setState({ activePage: pageNumber }) ;
-        this.componentDidMount();
-    
+    myUpdater() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(
+                    this.componentDidMount())
+            }, 10);
+        })
     }
- 
+
+    async handlePageChange(pageNumber) {
+        this.setState({ activePage: pageNumber });
+        await this.myUpdater();
+
+    }
+
 
     render() {
         return (
@@ -50,7 +58,7 @@ export default class UsersList extends Component {
 
 
                 <div style={{ display: "flex", justifyContent: "center", justifyItems: "center" }}>
-                
+
                     <Pagination
                         activePage={this.state.activePage}
                         itemsCountPerPage={this.state.activePage}
